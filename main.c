@@ -121,10 +121,6 @@ void print_list(struct tokenlist *head) {
     }
 }
 
-int yyerror(char *s) {
-   fprintf(stderr, "%s\n", s); exit(1);
-}
-
 
 int
 main(int argc, char **argv)

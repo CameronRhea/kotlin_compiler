@@ -2,10 +2,15 @@ CC = gcc
 CFLAGS = -Wall -g
 LDFLAGS = -lfl
 
-TARGET = k0
+OUTFILE = k0
 SRCS = lex.yy.c main.c k0gram.tab.c 
 HEADERS = funcs.h k0gram.tab.h tree.h
 OBJECTS = lex.yy.o main.o k0gram.tab.o
+
+
+all: $(OUTFILE)
+$(OUTFILE): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $@ $^ $(LDFLAGS)
 
 lex.yy.c: kotlex.l
 	flex kotlex.l
@@ -21,9 +26,6 @@ lex.yy.o : lex.yy.c tree.h
 
 k0gram.tab.o : k0gram.tab.c tree.h
 	$(CC) $(CFLAGS) -c k0gram.tab.c
-
-$(TARGET): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
 
 clean:
 	rm -f $(TARGET) $(OBJECTS) lex.yy.c k0gram.tab.c

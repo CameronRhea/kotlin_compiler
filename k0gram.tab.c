@@ -73,7 +73,7 @@
     #include <stdlib.h>
     #include "tree.h"
     int yylex(void);
-    int yyerror(char* s){ fprintf (stderr, "%s\n", s); exit(1); }
+    int yyerror(char* s);
 
 #line 79 "k0gram.tab.c"
 

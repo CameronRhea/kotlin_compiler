@@ -41,17 +41,17 @@ int create_token_node(int category){
     new_token->lineno = yylineno;
     new_token->filename = strdup(filename);
 
-    if (category == LIT_STRING || category == CHARACTER_LITERAL) {
+    if (category == STRING || category == UniCharacterLiteral) {
         new_token->sval = strdup(yytext);
         new_token->ival = 0;
         new_token->dval = 0.0;
 
-    } else if (category == INTEGER_LITERAL) {
+    } else if (category == IntegerLiteral) {
         new_token->sval = NULL;
         new_token->ival = atoi(yytext);
         new_token->dval = 0.0;
 
-    } else if (category == REAL_LITERAL || category == FLOAT_LITERAL || category == DOUBLE_LITERAL || category == UNSIGNED_LITERAL || category == LONG_LITERAL) {
+    } else if (category == RealLiteral || category == UnsignedLiteral) {
         new_token->sval = NULL;
         new_token->ival = 0;
         new_token->dval = atof(yytext);
@@ -108,11 +108,11 @@ void print_list(struct tokenlist *head) {
     while (temp != NULL) {
         struct token *token = temp->t;
         printf("%d\t\t%s\t\t%d\t%s\t", token->category, token->text, token->lineno, token->filename);
-        if (token->category == LIT_STRING || token->category == CHARACTER_LITERAL) {
+        if (token->category == STRING || token->category == UniCharacterLiteral) {
             printf("%s\n", token->sval);
-        } else if (token->category == INTEGER_LITERAL) {
+        } else if (token->category == IntegerLiteral) {
             printf("%d\n", token->ival);
-        } else if (token->category == REAL_LITERAL || token->category == FLOAT_LITERAL || token->category == DOUBLE_LITERAL || token->category == UNSIGNED_LITERAL || token->category == LONG_LITERAL) {
+        } else if (token->category == RealLiteral || token->category == UnsignedLiteral) {
             printf("%f\n", token->dval);
         } else {
             printf("\n");

@@ -37,7 +37,7 @@ UnsignedLiteral (({IntegerLiteral}|{HexLiteral}|{BinLiteral})[uU][L]?)
 LongLiteral (({IntegerLiteral}|{HexLiteral}|{BinLiteral})L)
 BooleanLiteral (true|false)
 NullLiteral null
-CharacterLiteral ('(\\.|[^\\'\n])')
+UniCharacterLiteral ('(\\.|[^\\'\n])')
 
 %%
 
@@ -182,7 +182,7 @@ CharacterLiteral ('(\\.|[^\\'\n])')
 {IntegerLiteral}       { return create_token_node(IntegerLiteral); }
 {HexLiteral}           { return create_token_node(HexLiteral); }
 {UnsignedLiteral}      { return create_token_node(UnsignedLiteral); }
-{CharacterLiteral}     { return create_token_node(CharacterLiteral); }
+{UniCharacterLiteral}     { return create_token_node(UniCharacterLiteral); }
 
 ([A-Za-z_][A-Za-z0-9_]*)|(`[^`]+`) { words++; chars += strlen(yytext); return create_token_node(Identifier); }
 .                      { chars++; printf("Unrecognized token: \"%s\"\n", yytext); return create_token_node(Identifier); }

@@ -2,52 +2,210 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include "tree.h"
+    extern char *yytext;
+    extern int yylineno;
     int yylex(void);
-    int yyerror(char* s){ fprintf (stderr, "%s\n", s); exit(1); }
+    int yyerror(char* s){ fprintf(stderr, "%s at line %d near token '%s'\n", s, yylineno, yytext); exit(1); }
 %}
 
 %union {
    struct tree *treeptr;
 }
 
-/* Define tokens that are actually used in the grammar */
-%token RESERVED DOT COMMA LPAREN RPAREN LSQUARE RSQUARE LCURL RCURL
-%token MULT MOD DIV ADD SUB INCR DECR
-%token CONJ DISJ
-%token EXCL_WS EXCL_NO_WS
-%token COLON SEMICOLON
+%token RESERVED
+%token DOT
+%token COMMA
+%token LPAREN
+%token RPAREN
+%token LSQUARE
+%token RSQUARE
+%token LCURL
+%token RCURL
+%token MULT
+%token MOD
+%token DIV
+%token ADD
+%token SUB
+%token INCR
+%token DECR
+%token CONJ
+%token DISJ
+%token EXCL_WS
+%token EXCL_NO_WS
+%token COLON
+%token SEMICOLON
 %token ASSIGNMENT
+%token ADD_ASSIGNMENT
+%token SUB_ASSIGNMENT
+%token MULT_ASSIGNMENT
+%token DIV_ASSIGNMENT
+%token MOD_ASSIGNMENT
 %token ARROW
+%token DOUBLE_ARROW
+%token RANGE
+%token RANGE_UNTIL
+%token COLONCOLON
+%token DOUBLE_SEMICOLON
+%token HASH
+%token AT_NO_WS
+%token AT_POST_WS
+%token AT_PRE_WS
+%token AT_BOTH_WS
+%token QUEST_WS
 %token QUEST_NO_WS
-%token LANGLE RANGLE LE GE
-%token EXCL_EQ EXCL_EQEQ EQEQ EQEQEQ
+%token LANGLE
+%token RANGLE
+%token LE
+%token GE
+%token EXCL_EQ
+%token EXCL_EQEQ
+%token AS_SAFE
+%token EQEQ
+%token EQEQEQ
 %token SINGLE_QUOTE
-%token RANGE RANGE_UNTIL
-%token FUN VAL VAR
-%token IF ELSE WHEN
-%token STRING MULTISTRING
-%token TRUE FALSE    /* Added explicit tokens for boolean literals */
+%token AMP
+%token RETURN_AT
+%token CONTINUE_AT
+%token BREAK_AT
+%token THIS_AT
+%token SUPER_AT
+%token K0FILE
+%token FIELD
+%token PROPERTY
+%token GET
+%token SET
+%token RECIEVER
+%token PARAM
+%token SETPARAM
+%token DELEGATE
+%token PACKAGE
+%token IMPORT
+%token CLASS
+%token INTERFACE
+%token FUN
+%token OBJECT
+%token VAL
+%token VAR
+%token TYPE_ALIAS
+%token CONSTRUCTOR
+%token BY
+%token COMPANION
+%token INIT
+%token THIS
+%token SUPER
+%token TYPEOF
+%token WHERE
+%token IF
+%token ELSE
+%token WHEN
+%token TRY
+%token CATCH
+%token FINALLY
+%token FOR
+%token DO
+%token WHILE
+%token THROW
+%token RETURN
+%token CONTINUE
+%token BREAK
+%token AS
+%token IS
+%token IN
+%token NOT_IS
+%token NOT_IN
+%token OUT
+%token DYNAMIC
+%token PUBLIC
+%token PRIVATE
+%token PROTECTED
+%token INTERNAL
+%token ENUM
+%token SEALED
+%token ANNOTATION
+%token DATA
+%token INNER
+%token VALUE
+%token TAILREC
+%token OPERATOR
+%token INLINE
+%token INFIX
+%token EXTERNAL
+%token SUSPEND
+%token OVERRIDE
+%token ABSTRACT
+%token FINAL
+%token OPEN
+%token CONST
+%token LATEINIT
+%token VARARG
+%token NOINLINE
+%token CROSSINLINE
+%token REIFIED
+%token EXPECT
+%token ACTUAL
+%token BOOLEAN
+%token CASE
+%token DEFAULT
+%token DOUBLE
+%token FLOAT
+%token INSTANCEOF
+%token INT
+%token LONG
+%token NEW
+%token STATIC
+%token SWITCH
+%token VOID
+%token DecDigitNoZero
+%token DecDigit
+%token DoubleExponent
+%token HexDigit
+%token HexDigitOrSeparator
+%token HexLiteral
+%token UnsignedLiteral
+%token NullLiteral
+%token UniCharacterLiteral
+%token EscapedIdentifier
+%token EscapeSeq
+%token Letter
+%token QuotedSymbol
+%token UnicodeDigit
 %token Identifier
+%token IdentifierOrSoftKey
+%token QUOTE_OPEN
+%token TRIPLE_QUOTE_OPEN
+%token FieldIdentifier
+%token QUOTE_CLOSE
+%token LineStrRef
+%token LineStrText
+%token LineStrEscapedChar
+%token LineStrExprStart
+%token TRIPLE_QUOTE_CLOSE
+%token MultilineStringQuote
+%token MultiLineStrRef
+%token MultiLineStrText
+%token MultiLineStrExprStart
+%token STRING
+%token MULTISTRING
+%token KotlinToken
 %token IntegerLiteral
 %token RealLiteral
-%token DecDigit
 %token DecDigitOrSeparator
-%token Letter
+%token TRUE
+%token FALSE
 
-/* Operator precedence and associativity */
-%right ASSIGNMENT    /* lowest precedence */
+%right ASSIGNMENT
 %left DISJ
 %left CONJ
 %left EQEQ EXCL_EQ EXCL_EQEQ EQEQEQ
 %left LANGLE RANGLE LE GE
 %left ADD SUB
 %left MULT DIV MOD
-%right EXCL_NO_WS   /* unary not */
-%left DOT           /* member access */
+%right EXCL_NO_WS
+%left DOT
 %nonassoc LOWER_THAN_ELSE
-%nonassoc ELSE      /* highest precedence */
+%nonassoc ELSE
 
-/* Start symbol */
+/* Start symbol */c
 %start kotlinFile
 
 %%

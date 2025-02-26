@@ -231,14 +231,27 @@ extern int yydebug;
     KotlinToken = 432,             /* KotlinToken  */
     IntegerLiteral = 433,          /* IntegerLiteral  */
     RealLiteral = 434,             /* RealLiteral  */
-    DecDigitOrSeparator = 435      /* DecDigitOrSeparator  */
+    DecDigitOrSeparator = 435,     /* DecDigitOrSeparator  */
+    TRUE = 436,                    /* TRUE  */
+    FALSE = 437,                   /* FALSE  */
+    LOWER_THAN_ELSE = 438,         /* LOWER_THAN_ELSE  */
+    c = 439                        /* c  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 11 "k0gram.y"
+
+   struct tree *treeptr;
+
+#line 252 "k0gram.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

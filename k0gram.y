@@ -261,7 +261,34 @@ type:
     ;
 
 nullableType:
-    type QUEST_NO_WS
+    typeReference QUEST_NO_WS
+    | parenthesizedType QUEST_NO_WS
+    ;
+
+typeReference:
+    userType
+    | DYNAMIC
+    ;
+
+userType:
+    simpleUserType
+    ;
+
+simpleUserType:
+    simpleIdentifier optional_typeArguments
+    ;
+
+optional_typeArguments:
+    LANGLE typeProjection RANGLE
+    | %empty
+    ;
+
+typeProjection:
+    type
+    ;
+
+parenthesizedType:
+    LPAREN type RPAREN
     ;
 
 functionType:

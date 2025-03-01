@@ -11,16 +11,7 @@ extern int yylex(void);
 extern char *yytext;
 extern int yylineno;
 extern int yyparse();
-
-struct token {
-   int category;
-   char *text;
-   int lineno;
-   char *filename;
-   int ival;
-   double dval;
-   char *sval;
-};
+extern struct tree *root;
 
 struct tokenlist {
     struct token *t;
@@ -29,8 +20,8 @@ struct tokenlist {
 
 char *filename = NULL;
 struct token *yytoken = NULL; 
+
 int create_token_node(int category){
-    printf("Created token %s. Category: %d\n", yytext, category);
     struct token* new_token = (struct token*)malloc(sizeof(struct token));    
     if (new_token == NULL) {
         printf("Memory allocation failed.\n");
@@ -85,7 +76,6 @@ void append_token(struct tokenlist **head, struct token *new_token) {
     current->next->next = NULL;
 }
 
-
 void free_list(struct tokenlist *head) {
     struct tokenlist *temp;
     while (head != NULL) {
@@ -122,12 +112,27 @@ void print_list(struct tokenlist *head) {
     }
 }
 
+void print_tree(struct tree *node, int depth) {
+    if (node == NULL) return;
+
+    for (int i = 0; i < depth; i++) printf("  ");
+    printf("prodrule and symbname %d, %s", node->prodrule, node->symbolname);
+
+    if (node->leaf) {
+        printf(" -> [token (testing): %s]\n", node->leaf->text);
+    } else {
+        printf("\n");
+    }
+
+    for (int i = 0; i < node->nkids; i++) {
+        print_tree(node->kids[i], depth + 1);
+    }
+}
 
 
-int
-main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     int parse;
+
     if(argc > 1) {
         yyin = fopen(argv[1], "r");
         filename = strdup(argv[1]);
@@ -137,12 +142,17 @@ main(int argc, char **argv)
 
     parse = yyparse();
     printf("yyparse() returns %d\n", parse);
-    fclose(yyin);
 
+    if (parse == 0 && root != NULL) {
+        printf("Syntax Tree:\n");
+        print_tree(root, 0);
+    } else {
+        printf("Parsing failed or tree is empty.\n");
+    }
 
-    // Testing lexer was working
-    // int token;
-    // while ((token = yylex()) != 0) {
-    //     printf("Token: %d, Text: %s\n", token, yytext);
-    // }
+    // Free memory
+    free_tree(root);
+    free(filename);
+
+    return parse;
 }

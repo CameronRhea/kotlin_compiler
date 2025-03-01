@@ -5,7 +5,8 @@
     extern char *yytext;
     extern int yylineno;
     int yylex(void);
-    int yyerror(char* s){ fprintf(stderr, "%s at line %d near token '%s'\n", s, yylineno, yytext); exit(1); }
+    int yyerror(char* s){ fprintf(stderr, "%s at line %d near token '%s'\n", s, yylineno, yytext); exit(1);
+    struct tree *root = NULL;}
 %}
 
 %union {

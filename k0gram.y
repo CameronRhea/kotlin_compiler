@@ -372,6 +372,7 @@ primaryExpression:
     | stringLiteral
     | ifExpression
     | whenExpression
+    | functionCall
     ;
 
 parenthesizedExpression:
@@ -442,6 +443,20 @@ whenEntry:
 whenCondition:
     expression
     | ELSE
+    ;
+
+functionCall:
+    simpleIdentifier LPAREN optional_ArgumentList RPAREN
+    ;
+
+optional_ArgumentList:
+    argumentList
+    | %empty
+    ;
+
+argumentList:
+    expression
+    | argumentList COMMA expression
     ;
 
 optional_semis:

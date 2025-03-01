@@ -30,6 +30,7 @@ struct tokenlist {
 char *filename = NULL;
 struct token *yytoken = NULL; 
 int create_token_node(int category){
+    printf("Created token %s. Category: %d\n", yytext, category);
     struct token* new_token = (struct token*)malloc(sizeof(struct token));    
     if (new_token == NULL) {
         printf("Memory allocation failed.\n");
@@ -122,6 +123,7 @@ void print_list(struct tokenlist *head) {
 }
 
 
+
 int
 main(int argc, char **argv)
 {
@@ -134,5 +136,13 @@ main(int argc, char **argv)
     }
 
     parse = yyparse();
-    printf("yyparse() returns %d", parse);
+    printf("yyparse() returns %d\n", parse);
+    fclose(yyin);
+
+
+    // Testing lexer was working
+    // int token;
+    // while ((token = yylex()) != 0) {
+    //     printf("Token: %d, Text: %s\n", token, yytext);
+    // }
 }

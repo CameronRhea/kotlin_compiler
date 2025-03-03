@@ -498,3 +498,8 @@ semis:
     ;
 
 %%
+
+const char *yyname(int sym)
+{
+   return yytname[sym-BAD_TOKEN+3];
+}

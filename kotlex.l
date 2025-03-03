@@ -80,7 +80,7 @@ UniCharacterLiteral ('(\\.|[^\\'\n])')
 "import"    { return create_token_node(IMPORT); }
 "class"     { return create_token_node(CLASS); }
 "interface" { return create_token_node(INTERFACE); }
-"fun"       { return create_token_node(FUN); }
+"fun"       { return FUN; }
 "object"    { return create_token_node(OBJECT); }
 "val"       { return create_token_node(VAL); }
 "var"       { return create_token_node(VAR); }

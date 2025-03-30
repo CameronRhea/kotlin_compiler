@@ -72,7 +72,7 @@ UniCharacterLiteral ('(\\.|[^\\'\n])')
 "property"  { return create_token_node(PROPERTY); }
 "get"       { return create_token_node(GET); }
 "set"       { return create_token_node(SET); }
-"receiver"  { return create_token_node(RECIEVER); }
+"receiver"  { return create_token_node(RECEIVER); }
 "param"     { return create_token_node(PARAM); }
 "setparam"  { return create_token_node(SETPARAM); }
 "delegate"  { return create_token_node(DELEGATE); }
@@ -84,7 +84,7 @@ UniCharacterLiteral ('(\\.|[^\\'\n])')
 "object"    { return create_token_node(OBJECT); }
 "val"       { return create_token_node(VAL); }
 "var"       { return create_token_node(VAR); }
-"typealias" { return create_token_node(TYPE_ALIAS); }
+"typealias" { return create_token_node(TYPEALIAS); }
 "constructor" { return create_token_node(CONSTRUCTOR); }
 "by"        { return create_token_node(BY); }
 "companion" { return create_token_node(COMPANION); }
@@ -177,13 +177,14 @@ UniCharacterLiteral ('(\\.|[^\\'\n])')
 "as?"       { return create_token_node(AS_SAFE); }
 "_"         { return create_token_node(RESERVED); }
 
-\"([^\n"]|\\\")*\"     { return create_token_node(STRING); }
-{RealLiteral}          { return create_token_node(RealLiteral); }
-{IntegerLiteral}       { return create_token_node(IntegerLiteral); }
-{HexLiteral}           { return create_token_node(HexLiteral); }
-{UnsignedLiteral}      { return create_token_node(UnsignedLiteral); }
-{UniCharacterLiteral}     { return create_token_node(UniCharacterLiteral); }
+\"([^\\\"\n]|\\.)*\"     { return create_token_node(STRING_LITERAL); }
+{RealLiteral}          { return create_token_node(REAL_LITERAL); }
+{IntegerLiteral}       { return create_token_node(INTEGER_LITERAL); }
+{HexLiteral}           { return create_token_node(HEX_LITERAL); }
+{UnsignedLiteral}      { return create_token_node(UNSIGNED_LITERAL); }
+{UniCharacterLiteral}      { return create_token_node(UNICHARACTER_LITERAL); }
 
-([A-Za-z_][A-Za-z0-9_]*)|(`[^`]+`) { words++; chars += strlen(yytext); return create_token_node(Identifier); }
-.                      { chars++; printf("Unrecognized token: \"%s\"\n", yytext); return create_token_node(Identifier); }
+
+([A-Za-z_][A-Za-z0-9_]*)|(`[^`]+`) { words++; chars += strlen(yytext); return create_token_node(IDENTIFIER); }
+.                      { chars++; printf("Unrecognized token: \"%s\"\n", yytext); return create_token_node(IDENTIFIER); }
 %%

@@ -21,8 +21,10 @@ struct tree {
 };
 
 extern struct tree *root;
+extern int serial;
 
-struct tree *create_node(int prodrule, char *symbolname, int nkids);
+struct tree *create_node(int prodrule, char *symbolname, int nkids, ...);
+void treeprint(struct tree *node, int level);
 void free_tree(struct tree *t);
 
 #endif

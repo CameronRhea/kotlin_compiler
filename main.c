@@ -18,6 +18,10 @@ struct tokenlist {
     struct tokenlist *next;
 };
 
+int yyerror(char *s) {
+    fprintf(stderr, "Parse error: %s\n", s);
+    return 1;
+}
 char *filename = NULL;
 struct token *yytoken = NULL; 
 
@@ -27,23 +31,23 @@ int create_token_node(int category){
         printf("Memory allocation failed.\n");
         exit(1);
     }
-
+	printf("yytext: %s\n", yytext);
     new_token->category = category;
     new_token->text = strdup(yytext);
     new_token->lineno = yylineno;
     new_token->filename = strdup(filename);
 
-    if (category == STRING || category == UniCharacterLiteral) {
+    if (category == STRING || category == UNICHARACTER_LITERAL) {
         new_token->sval = strdup(yytext);
         new_token->ival = 0;
         new_token->dval = 0.0;
 
-    } else if (category == IntegerLiteral) {
+    } else if (category == INTEGER_LITERAL) {
         new_token->sval = NULL;
         new_token->ival = atoi(yytext);
         new_token->dval = 0.0;
 
-    } else if (category == RealLiteral || category == UnsignedLiteral) {
+    } else if (category == REAL_LITERAL || category == UNSIGNED_LITERAL) {
         new_token->sval = NULL;
         new_token->ival = 0;
         new_token->dval = atof(yytext);
@@ -99,11 +103,11 @@ void print_list(struct tokenlist *head) {
     while (temp != NULL) {
         struct token *token = temp->t;
         printf("%d\t\t%s\t\t%d\t%s\t", token->category, token->text, token->lineno, token->filename);
-        if (token->category == STRING || token->category == UniCharacterLiteral) {
+        if (token->category == STRING || token->category == UNICHARACTER_LITERAL) {
             printf("%s\n", token->sval);
-        } else if (token->category == IntegerLiteral) {
+        } else if (token->category == INTEGER_LITERAL) {
             printf("%d\n", token->ival);
-        } else if (token->category == RealLiteral || token->category == UnsignedLiteral) {
+        } else if (token->category == REAL_LITERAL || token->category == UNSIGNED_LITERAL) {
             printf("%f\n", token->dval);
         } else {
             printf("\n");

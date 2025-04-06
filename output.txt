@@ -1,0 +1,117 @@
+yytext: main
+yytext: (
+yytext: args
+yytext: :
+yytext: Array
+yytext: <
+yytext: String
+yytext: >
+yytext: )
+yytext: {
+yytext: println
+yytext: (
+yytext: "Hello World!"
+yytext: )
+yytext: }
+  Node[49]: topLevelObjects (rule 1000)
+    Node[48]: topLevelObject (rule 1001)
+      Node[47]: functionDeclaration (rule 1009)
+        Node[15]: functionValueParameters (rule 1010)
+          Node[14]: optional_functionValueParameter (rule 1011)
+            Node[13]: functionValueParameter (rule 1012)
+              Node[12]: parameter (rule 1013)
+                Node[11]: type (rule 1026)
+                  Node[10]: nullableType (rule 1027)
+                    Node[9]: typeRef_parenthesizedType (rule 1029)
+                      Node[8]: userType (rule 1031)
+                        Node[7]: simpleUserType (rule 1032)
+                          Node[6]: typeArguments (rule 1034)
+                            Node[5]: typeProjection (rule 1036)
+                              Node[4]: type (rule 1026)
+                                Node[3]: nullableType (rule 1027)
+                                  Node[2]: typeRef_parenthesizedType (rule 1029)
+                                    Node[1]: userType (rule 1031)
+                                      Node[0]: simpleUserType (rule 1032)
+        Node[46]: optional_functionBody (rule 1016)
+          Node[45]: functionBody (rule 1015)
+            Node[44]: block (rule 1037)
+              Node[43]: statements (rule 1038)
+                Node[42]: optional_statement_sequence (rule 1039)
+                  Node[41]: statement (rule 1041)
+                    Node[40]: expression (rule 1050)
+                      Node[39]: disjuction (rule 1051)
+                        Node[38]: conjuction (rule 1052)
+                          Node[37]: equality (rule 1053)
+                            Node[36]: comparison (rule 1054)
+                              Node[35]: genericCallLikeComparison (rule 1055)
+                                Node[34]: elvisExpression (rule 1056)
+                                  Node[33]: rangeExpression (rule 1057)
+                                    Node[32]: additiveExpression (rule 1058)
+                                      Node[31]: multiplicativeExpression (rule 1059)
+                                        Node[30]: postfixUnaryExpression (rule 1063)
+                                          Node[29]: primaryExpression (rule 1070)
+                                            Node[28]: functionCall (rule 1072)
+                                              Node[27]: functionArguments (rule 1073)
+                                                Node[26]: expression (rule 1050)
+                                                  Node[25]: disjuction (rule 1051)
+                                                    Node[24]: conjuction (rule 1052)
+                                                      Node[23]: equality (rule 1053)
+                                                        Node[22]: comparison (rule 1054)
+                                                          Node[21]: genericCallLikeComparison (rule 1055)
+                                                            Node[20]: elvisExpression (rule 1056)
+                                                              Node[19]: rangeExpression (rule 1057)
+                                                                Node[18]: additiveExpression (rule 1058)
+                                                                  Node[17]: multiplicativeExpression (rule 1059)
+                                                                    Node[16]: postfixUnaryExpression (rule 1063)
+yyparse() returns 0
+Syntax Tree:
+prodrule and symbname 1000, topLevelObjects
+  prodrule and symbname 1001, topLevelObject
+    prodrule and symbname 1009, functionDeclaration
+      prodrule and symbname 1010, functionValueParameters
+        prodrule and symbname 1011, optional_functionValueParameter
+          prodrule and symbname 1012, functionValueParameter
+            prodrule and symbname 1013, parameter
+              prodrule and symbname 1026, type
+                prodrule and symbname 1027, nullableType
+                  prodrule and symbname 1029, typeRef_parenthesizedType
+                    prodrule and symbname 1031, userType
+                      prodrule and symbname 1032, simpleUserType
+                        prodrule and symbname 1034, typeArguments
+                          prodrule and symbname 1036, typeProjection
+                            prodrule and symbname 1026, type
+                              prodrule and symbname 1027, nullableType
+                                prodrule and symbname 1029, typeRef_parenthesizedType
+                                  prodrule and symbname 1031, userType
+                                    prodrule and symbname 1032, simpleUserType
+      prodrule and symbname 1016, optional_functionBody
+        prodrule and symbname 1015, functionBody
+          prodrule and symbname 1037, block
+            prodrule and symbname 1038, statements
+              prodrule and symbname 1039, optional_statement_sequence
+                prodrule and symbname 1041, statement
+                  prodrule and symbname 1050, expression
+                    prodrule and symbname 1051, disjuction
+                      prodrule and symbname 1052, conjuction
+                        prodrule and symbname 1053, equality
+                          prodrule and symbname 1054, comparison
+                            prodrule and symbname 1055, genericCallLikeComparison
+                              prodrule and symbname 1056, elvisExpression
+                                prodrule and symbname 1057, rangeExpression
+                                  prodrule and symbname 1058, additiveExpression
+                                    prodrule and symbname 1059, multiplicativeExpression
+                                      prodrule and symbname 1063, postfixUnaryExpression
+                                        prodrule and symbname 1070, primaryExpression
+                                          prodrule and symbname 1072, functionCall
+                                            prodrule and symbname 1073, functionArguments
+                                              prodrule and symbname 1050, expression
+                                                prodrule and symbname 1051, disjuction
+                                                  prodrule and symbname 1052, conjuction
+                                                    prodrule and symbname 1053, equality
+                                                      prodrule and symbname 1054, comparison
+                                                        prodrule and symbname 1055, genericCallLikeComparison
+                                                          prodrule and symbname 1056, elvisExpression
+                                                            prodrule and symbname 1057, rangeExpression
+                                                              prodrule and symbname 1058, additiveExpression
+                                                                prodrule and symbname 1059, multiplicativeExpression
+                                                                  prodrule and symbname 1063, postfixUnaryExpression

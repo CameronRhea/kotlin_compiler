@@ -5,6 +5,9 @@
 
 #include <stdarg.h>
 int serial = 0;
+extern char *yytext;
+extern int yylineno;
+extern 
 struct tree *create_node(int prodrule, char *symbolname, int nkids, ...) {
     struct tree *node = (struct tree *)malloc(sizeof(struct tree));
     node->prodrule = prodrule;
@@ -26,30 +29,49 @@ struct tree *create_node(int prodrule, char *symbolname, int nkids, ...) {
     node->leaf = NULL;
     return node;
 }
+//Prints out the tree
 void treeprint(struct tree *node, int level) {
     if (!node) return;
 
-    // Print indentation
     for (int i = 0; i < level; i++) {
         printf("  ");
     }
 
-    // Print current node
-    printf("Node[%d]: %s (rule %d)", node->id, node->symbolname, node->prodrule);
+    printf("\"%s\" (%d)", node->symbolname, node->prodrule);
 
-    // Optionally print leaf value
-    if (node->leaf) {
-        printf(" : '%d'", node->id);
-
-    }
+    if (node->nkids == 0 && node->leaf) {
+    printf(" LEAF");
+}
 
     printf("\n");
 
-    // Recursively print children
     for (int i = 0; i < node->nkids; i++) {
         treeprint(node->kids[i], level + 1);
     }
 }
+
+struct tree *create_token_node(int token_code) {
+    struct tree *node = malloc(sizeof(struct tree));
+    node->prodrule = token_code;
+
+    node->symbolname = strdup(yytext);
+
+    node->nkids = 0;
+    for (int i = 0; i < 9; i++) node->kids[i] = NULL;
+    node->id = serial++;
+
+    node->leaf = malloc(sizeof(struct token));
+    node->leaf->category = token_code;
+    node->leaf->text = strdup(yytext);
+    node->leaf->filename = strdup("stdin");
+    node->leaf->lineno = yylineno;
+    node->leaf->ival = 0;
+    node->leaf->dval = 0.0;
+    node->leaf->sval = NULL;
+
+    return node;
+}
+
 
 
 void free_tree(struct tree *t) {

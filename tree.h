@@ -24,6 +24,7 @@ extern struct tree *root;
 extern int serial;
 
 struct tree *create_node(int prodrule, char *symbolname, int nkids, ...);
+struct tree *create_token_node(int token_code);
 void treeprint(struct tree *node, int level);
 void free_tree(struct tree *t);
 

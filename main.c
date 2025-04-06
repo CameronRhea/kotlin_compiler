@@ -12,151 +12,34 @@ extern char *yytext;
 extern int yylineno;
 extern int yyparse();
 extern struct tree *root;
-
-struct tokenlist {
-    struct token *t;
-    struct tokenlist *next;
-};
+char *filename = NULL;
 
 int yyerror(char *s) {
     fprintf(stderr, "Parse error: %s\n", s);
     return 1;
 }
-char *filename = NULL;
-struct token *yytoken = NULL; 
-
-int create_token_node(int category){
-    struct token* new_token = (struct token*)malloc(sizeof(struct token));    
-    if (new_token == NULL) {
-        printf("Memory allocation failed.\n");
-        exit(1);
-    }
-	printf("yytext: %s\n", yytext);
-    new_token->category = category;
-    new_token->text = strdup(yytext);
-    new_token->lineno = yylineno;
-    new_token->filename = strdup(filename);
-
-    if (category == STRING || category == UNICHARACTER_LITERAL) {
-        new_token->sval = strdup(yytext);
-        new_token->ival = 0;
-        new_token->dval = 0.0;
-
-    } else if (category == INTEGER_LITERAL) {
-        new_token->sval = NULL;
-        new_token->ival = atoi(yytext);
-        new_token->dval = 0.0;
-
-    } else if (category == REAL_LITERAL || category == UNSIGNED_LITERAL) {
-        new_token->sval = NULL;
-        new_token->ival = 0;
-        new_token->dval = atof(yytext);
-
-    } else {
-        new_token->sval = NULL;
-        new_token->ival = 0;
-        new_token->dval = 0.0;
-    }
-    
-    yytoken = new_token;
-
-    return category;
-}
-
-void append_token(struct tokenlist **head, struct token *new_token) {
-    if (*head == NULL) {
-        *head = (struct tokenlist*)malloc(sizeof(struct tokenlist));
-        (*head)->t = new_token;
-        (*head)->next = NULL;
-        return;
-    }
-
-    struct tokenlist *current = *head;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-    current->next = (struct tokenlist*)malloc(sizeof(struct tokenlist));
-    current->next->t = new_token;
-    current->next->next = NULL;
-}
-
-void free_list(struct tokenlist *head) {
-    struct tokenlist *temp;
-    while (head != NULL) {
-        temp = head;
-        head = head->next;
-        struct token* temp_token = temp->t;
-        free(temp_token->text);
-        free(temp_token->filename);
-        if (temp_token->sval) {
-            free(temp_token->sval);
-        }
-        free(temp_token);
-        free(temp);
-    }
-}
-
-void print_list(struct tokenlist *head) {
-    struct tokenlist *temp = head;
-    printf("Category\tText\t\t\tLineno\tFilename\tIval/Sval/Dval\n");
-    printf("-------------------------------------------------------------------------\n");
-    while (temp != NULL) {
-        struct token *token = temp->t;
-        printf("%d\t\t%s\t\t%d\t%s\t", token->category, token->text, token->lineno, token->filename);
-        if (token->category == STRING || token->category == UNICHARACTER_LITERAL) {
-            printf("%s\n", token->sval);
-        } else if (token->category == INTEGER_LITERAL) {
-            printf("%d\n", token->ival);
-        } else if (token->category == REAL_LITERAL || token->category == UNSIGNED_LITERAL) {
-            printf("%f\n", token->dval);
-        } else {
-            printf("\n");
-        }
-        temp = temp->next;
-    }
-}
-
-void print_tree(struct tree *node, int depth) {
-    if (node == NULL) return;
-
-    for (int i = 0; i < depth; i++) printf("  ");
-    printf("prodrule and symbname %d, %s", node->prodrule, node->symbolname);
-
-    if (node->leaf) {
-        printf(" -> [token (testing): %s]\n", node->leaf->text);
-    } else {
-        printf("\n");
-    }
-
-    for (int i = 0; i < node->nkids; i++) {
-        print_tree(node->kids[i], depth + 1);
-    }
-}
-
 
 int main(int argc, char **argv) {
     int parse;
 
     if(argc > 1) {
         yyin = fopen(argv[1], "r");
+        if (!yyin) {
+            perror("Error opening file");
+            return 1;
+        }
         filename = strdup(argv[1]);
     } else {
+        yyin = stdin;
         filename = strdup("stdin");
     }
 
     parse = yyparse();
     printf("yyparse() returns %d\n", parse);
 
-    if (parse == 0 && root != NULL) {
-        printf("Syntax Tree:\n");
-        print_tree(root, 0);
-    } else {
-        printf("Parsing failed or tree is empty.\n");
-    }
-
-    // Free memory
     free_tree(root);
     free(filename);
 
     return parse;
 }
+
